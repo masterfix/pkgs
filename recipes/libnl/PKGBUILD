@@ -1,0 +1,25 @@
+pkgname=libnl
+pkgver=3.5.0
+pkgrel=1
+pkgdesc='Library for applications dealing with netlink sockets'
+arch=(aarch64)
+url='https://github.com/thom311/libnl/'
+license=(GPL)
+depends=()
+backup=(etc/libnl/classid etc/libnl/pktloc)
+source=(https://github.com/thom311/libnl/releases/download/libnl${pkgver//./_}/${pkgname}-${pkgver}.tar.gz)
+sha256sums=('352133ec9545da76f77e70ccb48c9d7e5324d67f6474744647a7ed382b5e05fa')
+
+build() {
+  cd $pkgname-$pkgver
+  ./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --sbindir=/usr/bin \
+    --disable-static
+  make
+}
+
+package() {
+  make -C $pkgname-$pkgver DESTDIR="$pkgdir" install
+}

@@ -1,0 +1,26 @@
+pkgname=git
+pkgver=2.29.2
+pkgrel=2
+pkgdesc='the fast distributed version control system'
+arch=('aarch64')
+url='https://git-scm.com/'
+license=('GPL2')
+source=("https://www.kernel.org/pub/software/scm/git/git-$pkgver.tar.xz")
+sha256sums=('f2fc436ebe657821a1360bcd1e5f4896049610082419143d60f6fa13c2f607c1')
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  ./configure \
+    --prefix=/usr \
+    --with-gitconfig=/etc/gitconfig \
+    --with-python=python3
+
+  make
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+  
+  make DESTDIR="$pkgdir" perllibdir="/usr/lib/perl5/5.32/site_perl" install
+}
