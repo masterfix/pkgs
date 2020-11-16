@@ -1,0 +1,27 @@
+pkgname=nodejs
+pkgver=15.2.0
+pkgrel=1
+pkgdesc='Evented I/O for V8 javascript'
+arch=('aarch64')
+url='https://nodejs.org/'
+license=('MIT')
+source=("nodejs-$pkgver.tar.gz::https://github.com/nodejs/node/archive/v$pkgver.tar.gz")
+md5sums=('b4974f783eb736d31ac1b60e4b3c336b')
+
+build() {
+  cd node-$pkgver
+
+  ./configure \
+    --prefix=/usr \
+    --shared-openssl \
+    --shared-zlib \
+    --shared-libuv
+
+  make
+}
+
+package() {
+  cd node-$pkgver
+
+  make DESTDIR="$pkgdir" install
+}
