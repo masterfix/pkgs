@@ -1,0 +1,49 @@
+pkgname=linux
+pkgver=5.4
+pkgrel=1
+pkgdesc='Linux'
+arch=('aarch64')
+license=(GPL2)
+source=(
+  "$pkgname::git+https://github.com/raspberrypi/linux.git#branch=rpi-5.4.y"
+)
+md5sums=('SKIP')
+
+prepare() {
+  cd $pkgname
+
+  make mrproper
+  make bcm2711_defconfig
+
+  #cp ../config .config
+  #make olddefconfig
+
+  #make -s kernelrelease > version
+}
+
+build() {
+  cd $pkgname
+  #make all
+  make
+  make zImage
+}
+
+package() {
+  cd $pkgname
+  
+  #local modulesdir="$pkgdir/usr/lib/modules/$pkgver"
+
+  #echo "Installing boot image..."
+  # systemd expects to find the kernel here to allow hibernation
+  # https://github.com/systemd/systemd/commit/edda44605f06a41fb86b7ab8128dcf99161d2344
+  #install -Dm644 "$(make -s image_name)" "$modulesdir/vmlinuz"
+
+  # Used by mkinitcpio to name the kernel
+  #echo "$pkgbase" | install -Dm644 /dev/stdin "$modulesdir/pkgbase"
+
+  #echo "Installing modules..."
+  #make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 modules_install
+
+  # remove build and source links
+  #rm "$modulesdir"/{source,build}
+}
