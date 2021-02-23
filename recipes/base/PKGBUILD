@@ -1,0 +1,10 @@
+pkgname=base
+pkgver=20210222
+pkgrel=1
+pkgdesc='Base Linux packages'
+arch=('any')
+license=('GPL')
+depends=(
+'base-files'
+'bash'
+)
