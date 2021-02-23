@@ -1,0 +1,30 @@
+pkgname=gitlab-runner
+pkgver=13.9.0
+pkgrel=2
+pkgdesc="The official GitLab CI runner written in Go"
+arch=('aarch64')
+url='https://gitlab.com/gitlab-org/gitlab-runner'
+license=('GPL3')
+install=INSTALL
+backup=('etc/gitlab-runner/config.toml')
+source=("https://s3.amazonaws.com/gitlab-runner-downloads/v${pkgver}/binaries/gitlab-runner-linux-arm64"
+        "gitlab-runner.service"
+        "gitlab-runner.sysusers"
+        "gitlab-runner.tmpfiles"
+        "config.toml"
+        "INSTALL")
+
+package() {
+  install -Dm644 "${srcdir}/config.toml" "${pkgdir}/etc/gitlab-runner/config.toml"
+  install -Dm644 "${srcdir}/gitlab-runner.service" "${pkgdir}/usr/lib/systemd/system/gitlab-runner.service"
+  install -Dm644 "${srcdir}/gitlab-runner.sysusers" "${pkgdir}/usr/lib/sysusers.d/gitlab-runner.conf"
+  install -Dm644 "${srcdir}/gitlab-runner.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/gitlab-runner.conf"
+  install -Dm755 gitlab-runner-linux-arm64 "${pkgdir}/usr/bin/gitlab-runner"
+}
+
+md5sums=('705cb793ee38e9687fb2069f19fbd0ee'
+         '3e3282e566af273a2721c04df994d2c1'
+         'efc3ad49c68771418b89aef9fe39d4b9'
+         '56a3e67fbea195da51ee78dee8fa6225'
+         '245ebe0da9465d6fc070bb3310101001'
+         '6a93fecd512928ea0194f10a37e80c6a')

@@ -1,0 +1,8 @@
+
+post_install() {
+  useradd --system --comment 'GitLab Runner' --shell /usr/bin/bash --home-dir /var/lib/gitlab-runner --create-home gitlab-runner
+}
+
+post_remove() {
+  userdel -r gitlab-runner
+}
