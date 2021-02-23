@@ -1,5 +1,5 @@
 
-cleanup:
+clean:
 	rm -vfr recipes/*/{pkg,src}
 
-.PHONY:	cleanup
+.PHONY:	clean
