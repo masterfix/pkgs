@@ -2,7 +2,7 @@ pkgname=bash
 _basever=5.1
 _patchlevel=4
 pkgver=${_basever}.${_patchlevel}
-pkgrel=1
+pkgrel=4
 pkgdesc='The GNU Bourne Again shell'
 arch=('aarch64')
 license=(GPL)
@@ -71,6 +71,15 @@ package() {
 
   # remove bashbug tool
   rm $pkgdir/usr/bin/bashbug
+  rm $pkgdir/usr/share/man/man1/bashbug.1
+
+  # remove headers
+  rm -fr $pkgdir/usr/include
+  rm $pkgdir/usr/lib/bash/Makefile.inc
+  rm $pkgdir/usr/lib/bash/loadables.h
+  rm -fr $pkgdir/usr/lib/pkgconfig
+  rm -fr $pkgdir/usr/share/info
+  rm -fr $pkgdir/usr/share/locale
 }
 
 md5sums=('bb91a17fd6c9032c26d0b2b78b50aff5'
